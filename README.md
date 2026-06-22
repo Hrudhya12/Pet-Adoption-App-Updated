@@ -4,10 +4,10 @@ Users answer a series of personality‑based questions, receive compatibility sc
 
 ## Features
   Interactive Interview System
-    - 5‑question compatibility quiz
-    - Different intros and reactions based on pet species
-    - Personality‑based scoring
-    - Top‑5 ranking results
+  - 5‑question compatibility quiz
+  - Different intros and reactions based on pet species
+  - Personality‑based scoring
+  - Top‑5 ranking results
 
 ## Pet Adoption
   - Adopt the highest‑ranked pet
