@@ -11,13 +11,12 @@ public class Pet {
     private int age;
     private String gender;
     private String size;
-    private String personality;   // was temperament
+    private String personality;
     private String healthStatus;
     private boolean adopted;
     private String adopterUsername;
     private Timestamp adoptionDate;
 
-    // Optional extra fields from your earlier version
     private String color;
     private String favoriteActivity;
     private double adoptionFee;
@@ -25,7 +24,6 @@ public class Pet {
     private String arrivalDate;
     private String uniqueTrait;
 
-    // Constructor used by DAO (DB → object)
     public Pet(int petId, String name, String type, String breed, int age, String gender,
                String size, String personality, String healthStatus,
                boolean adopted, String adopterUsername, Timestamp adoptionDate) {
@@ -43,7 +41,6 @@ public class Pet {
         this.adoptionDate = adoptionDate;
     }
 
-    // Optional extended constructor (if you still use it)
     public Pet(String name, int age, String gender, String personality,
                String breed, String color, String healthStatus,
                String favoriteActivity, double adoptionFee,
@@ -62,7 +59,6 @@ public class Pet {
         this.uniqueTrait = uniqueTrait;
     }
 
-    // Getters for table / logic
     public int getPetId() { return petId; }
     public String getName() { return name; }
     public String getType() { return type; }
@@ -76,19 +72,16 @@ public class Pet {
     public String getAdopterUsername() { return adopterUsername; }
     public Timestamp getAdoptionDate() { return adoptionDate; }
 
-    // Setters (only where needed)
     public void setAdopted(boolean adopted) { this.adopted = adopted; }
     public void setAdopterUsername(String adopterUsername) { this.adopterUsername = adopterUsername; }
     public void setAdoptionDate(Timestamp adoptionDate) { this.adoptionDate = adoptionDate; }
 
-    // Convenience method used in adoption flows
     public void adopt(String username) {
         this.adopted = true;
         this.adopterUsername = username;
         this.adoptionDate = new Timestamp(System.currentTimeMillis());
     }
 
-    // For console listing
     public String getListLine() {
         return name + " (" + type + ", " + breed + ", " + age + " yrs, " + size + ", " + personality + ")";
     }
@@ -105,7 +98,6 @@ public class Pet {
                 + "Adopted: " + (adopted ? "Yes" : "No");
     }
 
-    // equals/hashCode if you want GameScreen scoring to be safe
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
