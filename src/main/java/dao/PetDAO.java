@@ -9,9 +9,6 @@ import java.util.List;
 
 public class PetDAO {
 
-    // ---------------------------------------------------------
-    // GET ALL PETS
-    // ---------------------------------------------------------
     public List<Pet> getAllPets() {
         List<Pet> pets = new ArrayList<>();
 
@@ -48,9 +45,6 @@ public class PetDAO {
         return pets;
     }
 
-    // ---------------------------------------------------------
-    // GET PET BY ID (used in API)
-    // ---------------------------------------------------------
     public Pet getPetById(int id) {
 
         String sql = "SELECT pet_id, name, type, breed, age, gender, size, personality, " +
@@ -88,9 +82,6 @@ public class PetDAO {
         return null;
     }
 
-    // ---------------------------------------------------------
-    // GET PETS BY TYPE (used in GameScreen)
-    // ---------------------------------------------------------
     public List<Pet> getPetsByType(String type) {
         List<Pet> pets = new ArrayList<>();
 
@@ -130,9 +121,6 @@ public class PetDAO {
         return pets;
     }
 
-    // ---------------------------------------------------------
-    // SEARCH PETS (used in SearchPetsScreen)
-    // ---------------------------------------------------------
     public List<Pet> searchPets(String type, String size, String personality) {
         List<Pet> pets = new ArrayList<>();
 
@@ -182,9 +170,6 @@ public class PetDAO {
         return pets;
     }
 
-    // ---------------------------------------------------------
-    // UPDATE PET (used when adopting)
-    // ---------------------------------------------------------
     public void updatePet(Pet pet) {
 
         String sql = "UPDATE pets SET name = ?, type = ?, breed = ?, age = ?, gender = ?, " +
@@ -214,9 +199,6 @@ public class PetDAO {
         }
     }
 
-    // ---------------------------------------------------------
-    // GET ADOPTED PETS (used in MyAdoptionsScreen)
-    // ---------------------------------------------------------
     public List<Pet> getAdoptedPets(String username) {
         List<Pet> pets = new ArrayList<>();
 
