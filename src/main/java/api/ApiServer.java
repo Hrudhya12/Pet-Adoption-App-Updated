@@ -28,7 +28,7 @@ public class ApiServer {
                 return "Pet not found";
             }
 
-            p.adopt("Jerry"); // temporary until we connect login
+            p.adopt("Jerry");
             petDAO.updatePet(p);
 
             return "OK";
