@@ -28,7 +28,6 @@ public class UserDashboard {
         gameBtn.setPrefWidth(200);
         logoutBtn.setPrefWidth(200);
 
-        // BUTTON ACTIONS (correct)
         viewPetsBtn.setOnAction(e -> ViewPetsScreen.show(stage, user));
         searchPetsBtn.setOnAction(e -> SearchPetsScreen.show(stage, user));
         adoptHistoryBtn.setOnAction(e -> MyAdoptionsScreen.show(stage, user));
