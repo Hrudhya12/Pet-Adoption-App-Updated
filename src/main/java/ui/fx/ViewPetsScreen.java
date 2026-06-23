@@ -42,7 +42,6 @@ public class ViewPetsScreen {
 
         table.getColumns().addAll(nameCol, typeCol, sizeCol, personalityCol);
 
-        // ⭐ View Details button
         Button detailsBtn = new Button("View Details");
         detailsBtn.setOnAction(e -> {
             Pet selected = table.getSelectionModel().getSelectedItem();
@@ -55,7 +54,6 @@ public class ViewPetsScreen {
             showPetDetailsPopup(selected, user, petDAO, table);
         });
 
-        // ⭐ Back button
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e -> UserDashboard.show(stage, user));
 
@@ -71,7 +69,6 @@ public class ViewPetsScreen {
         stage.show();
     }
 
-    // ⭐ Popup window for pet details
     private static void showPetDetailsPopup(Pet pet, User user, PetDAO petDAO, TableView<Pet> table) {
 
         Dialog<Void> dialog = new Dialog<>();
@@ -90,7 +87,6 @@ public class ViewPetsScreen {
         VBox infoBox = new VBox(8, name, type, breed, age, gender, size, personality, health, adopted);
         infoBox.setPadding(new Insets(10));
 
-        // ⭐ Adopt button inside popup
         Button adoptBtn = new Button("Proceed to Adopt");
 
         if (pet.isAdopted()) {
