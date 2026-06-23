@@ -91,7 +91,6 @@ public class GameScreen {
 
     private void init() {
 
-        // ✔ Always ask the user which pet type they want to interview
         String chosenType = askTypePopup(stage);
         if (chosenType == null) {
             HomeScreen.show(stage);
@@ -100,7 +99,6 @@ public class GameScreen {
 
         this.selectedType = chosenType;
 
-        // ✔ Load pets of that type
         List<Pet> allOfType = petDAO.getPetsByType(chosenType);
         interviewPets.clear();
         for (Pet p : allOfType) {
@@ -109,7 +107,6 @@ public class GameScreen {
             }
         }
 
-        // ✔ If no pets available
         if (interviewPets.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No pets available");
@@ -120,19 +117,15 @@ public class GameScreen {
             return;
         }
 
-        // ✔ Initialize scores
         scores.clear();
         for (Pet p : interviewPets) {
             scores.put(p, 0);
         }
 
-        // ✔ Build UI
         buildUI(chosenType);
 
-        // ✔ Show species intro BEFORE first question
         introLabel.setText(getSpeciesIntro(chosenType));
 
-        // ✔ Start the interview
         showQuestion(chosenType);
     }
 
@@ -141,11 +134,9 @@ public class GameScreen {
         titleLabel = new Label("🐾 " + type + " Interview Panel 🐾");
         titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
-        // Species intro (static per game)
         introLabel = new Label();
         introLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
-        // Pet-specific intro (changes per question)
         subIntroLabel = new Label();
         subIntroLabel.setStyle("-fx-font-size: 13px;");
 
@@ -172,7 +163,6 @@ public class GameScreen {
         backButton = new Button("Back to Dashboard");
         backButton.setOnAction(e -> UserDashboard.show(stage, loggedInUser));
 
-        // IMPORTANT: add both intros to the layout
         VBox root = new VBox(15, titleLabel, introLabel, subIntroLabel, questionLabel, row1, row2, backButton);
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.TOP_CENTER);
@@ -186,7 +176,7 @@ public class GameScreen {
     private String getSpeciesIntro(String type) {
         switch (type.toLowerCase()) {
             case "dog":
-                return "The dogs gather around you, tails wagging… except the husky who looks too excited.";
+                return "The dogs gather around you, tails wagging… except the husky who does not look too excited.";
             case "cat":
                 return "The cats gather around you, judging you silently with flicking tails.";
             case "rabbit":
@@ -213,9 +203,6 @@ public class GameScreen {
         }
     }
 
-    // -------------------------
-    // QUESTIONS
-    // -------------------------
     private void showQuestion(String type) {
         String species = type.toLowerCase();
 
@@ -334,9 +321,6 @@ public class GameScreen {
         option4.setText("4. " + o4);
     }
 
-    // -------------------------
-    // SIMPLE BEGINNER-FRIENDLY SCORING
-    // -------------------------
     private void handleAnswer(int answer, String type) {
 
         for (Pet p : interviewPets) {
@@ -345,35 +329,30 @@ public class GameScreen {
             String breed = p.getBreed().toLowerCase();
             String personality = p.getPersonality().toLowerCase();
 
-            // Q1 — activity level
             if (currentQuestion == 1) {
                 if (answer == 1 && (breed.contains("labrador") || breed.contains("retriever") || breed.contains("husky") || breed.contains("german"))) add = 30;
                 else if (answer == 2) add = 20;
                 else if (answer == 3) add = 10;
             }
 
-            // Q2 — energy
             if (currentQuestion == 2) {
                 if (answer == 1 && (personality.contains("energetic") || personality.contains("playful"))) add = 30;
                 else if (answer == 2) add = 20;
                 else if (answer == 3) add = 10;
             }
 
-            // Q3 — grooming
             if (currentQuestion == 3) {
                 if (answer == 1 && (breed.contains("poodle") || breed.contains("persian") || breed.contains("angora"))) add = 30;
                 else if (answer == 2) add = 20;
                 else if (answer == 3) add = 10;
             }
 
-            // Q4 — noise tolerance
             if (currentQuestion == 4) {
                 if (answer == 1 && (type.equalsIgnoreCase("dog") || type.equalsIgnoreCase("bird"))) add = 30;
                 else if (answer == 2) add = 20;
                 else if (answer == 3) add = 10;
             }
 
-            // Q5 — time at home
             if (currentQuestion == 5) {
                 if (answer == 1 && (personality.contains("affectionate") || personality.contains("friendly"))) add = 30;
                 else if (answer == 2) add = 20;
@@ -386,9 +365,7 @@ public class GameScreen {
         currentQuestion++;
         showQuestion(type);
     }
-    // -------------------------
-    // RESULTS
-    // -------------------------
+ 
     private void showResults(String type) {
 
         List<Map.Entry<Pet, Integer>> sorted = new ArrayList<>(scores.entrySet());
@@ -414,13 +391,11 @@ public class GameScreen {
 
         questionLabel.setText(sb.toString());
 
-        // ⭐ NEW BUTTON TEXTS
         option1.setText("Adopt " + topPet.getName());
         option2.setText("Adopt someone else from Top 5");
         option3.setText("View all pets");
         option4.setText("Back to Dashboard");
 
-        // ⭐ 1. Adopt highest compatible pet
         option1.setOnAction(e -> {
 
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -443,21 +418,19 @@ public class GameScreen {
                             "\n\n" + topPet.getName() + ": \"" +
                             getAdoptReaction(topPet, true) + "\"");
 
-                    // ⭐ Delay so reaction is visible
                     PauseTransition pause = new PauseTransition(Duration.seconds(2));
                     pause.setOnFinished(ev -> UserDashboard.show(stage, loggedInUser));
                     pause.play();
                 }
             });
         });
-        // ⭐ 2. Adopt someone else from Top 5
+
         option2.setOnAction(e -> {
 
             Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
             choose.setTitle("Choose a Pet");
             choose.setHeaderText("Choose someone else to adopt:");
 
-            // Create buttons for pets 2–5
             List<ButtonType> petButtons = new ArrayList<>();
             List<Pet> otherPets = new ArrayList<>();
 
@@ -475,7 +448,6 @@ public class GameScreen {
 
                 if (chosenButton == cancel) return;
 
-                // Find which pet was chosen
                 Pet chosenPet = null;
                 for (int i = 0; i < petButtons.size(); i++) {
                     if (chosenButton == petButtons.get(i)) {
@@ -485,7 +457,6 @@ public class GameScreen {
 
                 if (chosenPet == null) return;
 
-                // Confirm adoption
                 Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
                 confirm.setTitle("Confirm Adoption");
                 confirm.setHeaderText(null);
@@ -510,7 +481,6 @@ public class GameScreen {
                                 "\n" + topPet.getName() + ": \"" +
                                 getAdoptReaction(topPet, false) + "\"");
 
-                        // ⭐ Delay so reactions are visible
                         PauseTransition pause = new PauseTransition(Duration.seconds(2));
                         pause.setOnFinished(ev -> UserDashboard.show(stage, loggedInUser));
                         pause.play();
@@ -519,7 +489,6 @@ public class GameScreen {
             });
         });
 
-        // ⭐ 3. View all pets
         option3.setOnAction(e -> {
             questionLabel.setText(questionLabel.getText() +
                     "\n\n" + topPet.getName() + ": \"" +
@@ -528,7 +497,6 @@ public class GameScreen {
             ViewPetsScreen.show(stage, loggedInUser);
         });
 
-        // ⭐ 4. Back to Dashboard
         option4.setOnAction(e -> {
             questionLabel.setText(questionLabel.getText() +
                     "\n\n" + topPet.getName() + ": \"" +
@@ -538,12 +506,6 @@ public class GameScreen {
         });
     }
 
-
-
-
-    // -------------------------
-    // FINAL REACTION LINES (species + personality)
-    // -------------------------
     private String getTopPetFinalLine(Pet pet) {
         String type = pet.getType().toLowerCase();
         String personality = safe(pet.getPersonality()).toLowerCase();
@@ -599,9 +561,6 @@ public class GameScreen {
         String type = pet.getType().toLowerCase();
         String personality = safe(pet.getPersonality()).toLowerCase();
 
-        // -------------------------
-        // USER ADOPTED TOP PET
-        // -------------------------
         if (adoptedTop) {
             if (type.equals("cat")) {
                 if (personality.contains("playful") || personality.contains("energetic"))
@@ -650,9 +609,6 @@ public class GameScreen {
             return "Alright human, I choose to adopt you.";
         }
 
-        // -------------------------
-        // USER DID NOT ADOPT TOP PET
-        // -------------------------
         if (type.equals("cat")) {
             if (personality.contains("playful") || personality.contains("energetic"))
                 return "Seriously? You chose someone else when I was ready to give you a chance?";
