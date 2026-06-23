@@ -7,7 +7,6 @@ import java.sql.*;
 
 public class UserDAO {
 
-    // REGISTER USER
     public boolean registerUser(User user) {
         String sql = "INSERT INTO users (name, email, password, age, preferred_pet_type, preferred_size, preferred_personality) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -31,7 +30,6 @@ public class UserDAO {
         }
     }
 
-    // LOGIN USER
     public static User loginUser(String email, String password) {
         String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
 
@@ -54,7 +52,6 @@ public class UserDAO {
                 user.setPreferredSize(rs.getString("preferred_size"));
                 user.setPreferredPersonality(rs.getString("preferred_personality"));
 
-                // username = email
                 user.setUsername(rs.getString("email"));
 
                 return user;
@@ -67,7 +64,6 @@ public class UserDAO {
         return null;
     }
 
-    // CHECK IF EMAIL EXISTS
     public boolean emailExists(String email) {
         String sql = "SELECT email FROM users WHERE email = ?";
 
