@@ -14,7 +14,6 @@ public class User {
     private boolean staff;
 
 
-    // Constructor for registration
     public User(String name, String email, String password, int age,
                 String preferredPetType, String preferredSize, String preferredPersonality) {
         this.name = name;
@@ -26,10 +25,8 @@ public class User {
         this.preferredPersonality = preferredPersonality;
     }
 
-    // Empty constructor for login
     public User() {}
 
-    // Getters
     public int getUserId() {
         return userId;
     }
@@ -69,8 +66,6 @@ public class User {
         return staff;
     }
 
-
-    // Setters
     public void setUserId(int userId) {
         this.userId = userId;
     }
